@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: Karantina;
+  src: url('/public/fonts/Karantina-Regular.ttf') format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Karantina;
+  src: url('/public/fonts/Karantina-Bold.ttf') format('truetype');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Urbanist;
+  src: url('/public/fonts/Urbanist-Regular.ttf') format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Urbanist;
+  src: url('/public/fonts/Urbanist-Italic.ttf') format('truetype');
+  font-weight: italic;
+}
+
+@font-face {
+  font-family: Urbanist;
+  src: url('/public/fonts/Urbanist-Bold.ttf') format('truetype');
+  font-weight: bold;
+}
+
+@layer components {
+  .drop-shadow {
+    filter: drop-shadow(5px 5px 5px #fbfbfb);
+    -webkit-filter: drop-shadow(5px 5px 5px #fbfbfb);
+  }
+
+  .input {
+    @apply border border-doom-gray text-doom-text outline-none focus:border-doom-blue transition-colors duration-300 ease-in-out px-2 py-1 rounded-md bg-doom-bg;
+  }
+
+  .cancel-button {
+    @apply border border-doom-red text-doom-red hover:bg-doom-red hover:text-white transition-colors duration-300 ease-in-out px-2 py-1 rounded-md;
+  }
+
+  .submit-button {
+    @apply disabled:opacity-40 border border-doom-green text-doom-green hover:bg-doom-green hover:text-white transition-colors duration-300 ease-in-out px-2 py-1 rounded-md;
+  }
+}
+
+@layer base {
+  html {
+    font-family: Urbanist, cursive;
+    font-size: 16px;
+  }
+
+  body {
+    color: theme('colors.doom.text');
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: Karantina, cursive;
+    color: theme('colors.doom.yellow');
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+  }
+
+  a {
+    color: theme('colors.doom.green');
+    text-decoration: none;
+    transition: 0.2s ease-in-out;
+  }
+
+  a:hover {
+    color: theme('colors.doom.fluorescent');
+  }
+
+  * {
+    box-sizing: border-box;
+    scrollbar-color: theme('colors.doom.green') theme('colors.doom.bgLight');
+    scrollbar-width: thin;
+    outline: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: theme('colors.doom.bgLight');
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.doom.orange');
+    transition: 200ms ease-in-out;
+  }
+
+  @keyframes bounce {
+    0%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animation-delay-1 {
+    animation-delay: 0.1s !important;
+  }
+
+  .animation-delay-2 {
+    animation-delay: 0.2s !important;
+  }
+
+  .animation-delay-3 {
+    animation-delay: 0.3s !important;
+  }
+
+  .animation-delay-4 {
+    animation-delay: 0.4s !important;
+  }
+
+  .animation-delay-5 {
+    animation-delay: 0.5s !important;
+  }
+}

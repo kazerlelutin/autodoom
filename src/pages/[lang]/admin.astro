@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import AdminPage from '../../components/AdminPage'
+export const prerender: boolean = true
+
+export async function getStaticPaths() {
+  return [{ params: { lang: 'fr' } }, { params: { lang: 'en' } }]
+}
+
+const { lang } = Astro.params
+
+// form avec un input name, langue, email et un bouton, pour ajouter un modo
+//Liste des modo
+// ligne, email, nom fr, et un bouton delete
+---
+
+<Layout title="Welcome to Astro.">
+  <main class="h-full">
+    <AdminPage client:only />
+  </main>
+</Layout>

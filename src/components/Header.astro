@@ -1,0 +1,39 @@
+---
+import SubmitDeviceModal from '@/components/SubmitDevice.modal.react'
+
+const [, lang] = Astro.url.pathname.split('/')
+
+const texts = {
+  fr: {
+    kofiTitle: 'Offrez-moi un café',
+  },
+  en: {
+    kofiTitle: 'Buy me a coffee',
+  },
+}[lang]
+
+const turnstileKey = import.meta.env.DEV
+  ? '1x00000000000000000000AA'
+  : import.meta.env.PUBLIC_TURNSTILE_KEY
+---
+
+<header class="p-1 flex justify-between items-center bg-neutral-950">
+  <div>
+    <a href="/" class="uppercase text-white font-[Karantina] text-2xl">
+      <span>NSW</span><span class="text-doom-red">D</span>
+    </a>
+  </div>
+  <div class="flex gap-2">
+    <SubmitDeviceModal client:only="react" turnstileKey={turnstileKey} />
+    <a
+      href="https://ko-fi.com/kazerlelutin"
+      target="_blank"
+      rel="noreferer"
+      title={texts.kofiTitle}
+      class="flex gap-1 items-center text-xs"
+    >
+      {texts.kofiTitle}
+      <img src="/kofi.webp" class="drop-shadow" />
+    </a>
+  </div>
+</header>

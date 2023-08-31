@@ -1,69 +1,64 @@
 ---
+import Header from '@/components/Header.astro'
 export interface Props {
-	title: string;
+  title: string
 }
 
-const { title } = Astro.props as Props;
+const { title } = Astro.props as Props
+
+/**
+ * //TODO
+ * Creer le form pour proposer une machine
+
+Mise en place des mails de modération machines
+
+recherche auto par machine --> save des articles
+
+tri des articles par chatgpt
+
+écriture des articles par chatgpt
+
+génération des podcasts par chatgpt
+
+bouton de report.
+
+FOOTER --> about, tout le reste. 
+
+Creer le form pour porposer un articles ? (ajouté dans la listes)
+ */
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<script>
-			import { webVitals } from "../lib/vitals";
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <script>
+      import { webVitals } from '../lib/vitals'
+      import '@/styles/globals.css'
 
-			let analyticsId = import.meta.env.PUBLIC_VERCEL_ANALYTICS_ID;
+      const analyticsId = import.meta.env.PUBLIC_VERCEL_ANALYTICS_ID
 
-			if (analyticsId) {
-				webVitals({
-					path: location.pathname,
-					params: location.search,
-					analyticsId,
-				});
-			}
-		</script>
-	</head>
-	<body>
-		<slot />
-	</body>
+      if (analyticsId) {
+        webVitals({
+          path: location.pathname,
+          params: location.search,
+          analyticsId,
+        })
+      }
+    </script>
+  </head>
+  <body class="bg-doom-bg grid grid-rows-[auto_1fr_auto] h-screen">
+    <Header />
+    <div class="relative bg-slate-800 h-full">
+      <main class="absolute top-0 bottom-0 left-0 right-0 p-2">
+        <slot />
+      </main>
+    </div>
+
+    <footer>About - git - legal notice - ko-fi</footer>
+  </body>
 </html>
-<style>
-	:root {
-		--font-size-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
-		--font-size-lg: clamp(1.2rem, 0.7vw + 1.2rem, 1.5rem);
-		--font-size-xl: clamp(2.44rem, 2.38vw + 1.85rem, 3.75rem);
-
-		--color-text: hsl(12, 5%, 4%);
-		--color-bg: hsl(10, 21%, 95%);
-		--color-border: hsl(17, 24%, 90%);
-	}
-
-	html {
-		font-family: system-ui, sans-serif;
-		font-size: var(--font-size-base);
-		color: var(--color-text);
-		background-color: var(--color-bg);
-	}
-
-	body {
-		margin: 0;
-	}
-
-	:global(h1) {
-		font-size: var(--font-size-xl);
-	}
-
-	:global(h2) {
-		font-size: var(--font-size-lg);
-	}
-
-	:global(code) {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
-</style>

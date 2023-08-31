@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro'
+export const prerender: boolean = true
+
+export async function getStaticPaths() {
+  return [{ params: { lang: 'fr' } }, { params: { lang: 'en' } }]
+}
+
+const { lang } = Astro.params
+---
+
+<Layout title="Welcome to Astro.">
+  <main>
+    <h1 class="text-2xl">{lang}</h1>
+    <p class="instructions">Il faut creer la base de donnees</p>
+  </main>
+</Layout>
