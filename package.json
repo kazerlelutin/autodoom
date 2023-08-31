@@ -15,11 +15,11 @@
     "@aws-sdk/client-s3": "^3.400.0",
     "@google-cloud/text-to-speech": "^5.0.0",
     "@headlessui/react": "^1.7.17",
-    "@marsidev/react-turnstile": "^0.2.3",
+    "@marsidev/react-turnstile": "^0.2.4",
     "@prisma/client": "^5.2.0",
     "@vercel/edge": "^1.0.1",
     "@vercel/node": "^3.0.3",
-    "astro": "^2.10.14",
+    "astro": "^2.10.15",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "jsdom": "^22.1.0",
@@ -27,11 +27,12 @@
     "react-dom": "^18.2.0",
     "resend": "^1.0.0",
     "tailwindcss": "^3.3.3",
+    "uuid": "^9.0.0",
     "web-audio-engine": "^0.13.4",
     "web-vitals": "^3.4.0"
   },
   "devDependencies": {
-    "@types/node": "^20.5.6",
+    "@types/node": "^20.5.7",
     "@types/react": "^18.2.21",
     "prisma": "^5.2.0",
     "typescript": "^5.2.2"

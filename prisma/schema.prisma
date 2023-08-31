@@ -11,52 +11,13 @@ datasource db {
 }
 
 model Device {
-  id        String    @id @default(uuid())
-  name      String    @unique
-  updatedAt DateTime  @updatedAt
-  articles  Article[]
-  isActive  Boolean   @default(false) // Active après modération
-}
-
-model Article {
-  id       String @id @unique @default(uuid())
-  device   Device @relation(fields: [deviceId], references: [id])
-  deviceId String
-
-  sourceUrl String // Lien vers la source de l'article
-  isValid   Boolean @default(false) // Valide après modération
-  reports   Int     @default(0)
-
-  image          String? // URL vers l'image du podcast et de l'article
-  youtubeVideoId String? // ID de la vidéo Youtube
-  updatedAt      DateTime @updatedAt
-
-  // translate fields-----------------------------------------------------------------------------------------------
-  titleKey       String @unique @default(uuid())
-  descriptionKey String @unique @default(uuid())
-  contentKey     String @unique @default(uuid())
-
-  // Relations ----------------------------------------------------------------------------------------------------
-  Podcast Podcast?
-}
-
-model Podcast {
-  id String @id @unique @default(uuid())
-
-  image       String // URL vers l'image du podcast
-  audio       String // URL vers le fichier audio
-  duration    Int // Durée en secondes
-  isPublished Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // translate fields-----------------------------------------------------------------------------------------------
-  titleKey   String @unique @default(uuid()) //translate
-  summaryKey String @unique @default(uuid()) //translate
-
-  // Relations ----------------------------------------------------------------------------------------------------
-  Article   Article @relation(fields: [articleId], references: [id])
-  articleId String  @unique
+  id         String       @id @default(uuid())
+  name       String       @unique
+  updatedAt  DateTime     @updatedAt
+  articles   Content[] // Renommé en "Content"
+  isActive   Boolean      @default(false) // Active après modération
+  moderation Moderation[]
+  Search     Search[]
 }
 
 model Moderator {
@@ -69,15 +30,19 @@ model Moderator {
   ModerationRequest ModerationRequest[]
 }
 
+model CronLog {
+  id        String   @id @default(uuid())
+  timestamp DateTime @default(now())
+  name      String
+}
+
 model ActionLog {
   id          String     @id @default(uuid())
   actionType  ActionType
   moderator   Moderator  @relation(fields: [moderatorId], references: [id])
   moderatorId String
   timestamp   DateTime   @default(now())
-
-  // Translate fields ----------------------------------------------------------------------------------------------------
-  detailsKey String @unique @default(uuid()) //resume of action
+  detailsKey  String     @unique @default(uuid()) // Renommé en "detailsKey"
 }
 
 enum RequestType {
@@ -92,11 +57,41 @@ model Translation {
   text     String
 }
 
+model Content {
+  id          String      @id @default(uuid())
+  type        ContentType // article ou podcast
+  image       String // URL vers l'image du contenu
+  audio       String // URL vers le fichier audio
+  duration    Int // Durée en secondes
+  isPublished Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  translations ContentTranslation[] // Nouvelle relation pour les traductions
+
+  // Relations
+  moderation Moderation[]
+  Device     Device?      @relation(fields: [deviceId], references: [id])
+  deviceId   String?
+  Search     Search[]
+}
+
+model ContentTranslation {
+  id          String  @id @default(uuid())
+  content     Content @relation(fields: [contentId], references: [id])
+  contentId   String
+  language    String
+  title       String
+  description String
+}
+
 model Moderation {
   id                 String              @id @default(uuid())
-  token              String              @unique
   type               RequestType
-  associatedId       String // element id Associated to the request
+  device             Device?             @relation(fields: [deviceId], references: [id])
+  article            Content?            @relation(fields: [articleId], references: [id]) // Renommé en "Content"
+  deviceId           String?
+  articleId          String?
   acceptedCount      Int                 @default(0)
   rejectedCount      Int                 @default(0)
   createdAt          DateTime            @default(now())
@@ -118,6 +113,20 @@ model ModerationRequest {
   moderationId String?
 }
 
+model Search {
+  id                  String   @id @default(uuid())
+  searchPhrase        String
+  isActive            Boolean  @default(true)
+  isBlacklisted       Boolean  @default(false)
+  hasGeneratedArticle Boolean  @default(false)
+  article             Content? @relation(fields: [articleId], references: [id]) // Renommé en "Content"
+  device              Device?  @relation(fields: [deviceId], references: [id])
+  deviceId            String?
+  articleId           String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
 enum RequestResult {
   APPROVED
   REJECTED
@@ -130,4 +139,9 @@ enum ActionType {
   ARTICLE_APPROVAL
   ARTICLE_REJECTION
   ARTICLE_REPORT
+}
+
+enum ContentType {
+  ARTICLE
+  PODCAST
 }

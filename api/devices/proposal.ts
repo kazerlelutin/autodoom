@@ -1,3 +1,4 @@
+import { RequestType } from '@prisma/client'
 import prisma from '../../src/lib/prisma'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
@@ -22,6 +23,11 @@ export default async function proposal(
     await prisma.device.create({
       data: {
         name: device,
+        moderation: {
+          create: {
+            type: RequestType.DEVICE_APPROVAL,
+          },
+        },
       },
     })
 

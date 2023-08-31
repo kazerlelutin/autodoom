@@ -20,7 +20,6 @@ export default async function verify(request: Request) {
   formData.append('secret', TURNSTILE_SECRET)
   formData.append('response', token)
   formData.append('remoteip', ip)
-
   const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
 
   const result = await fetch(url, {
